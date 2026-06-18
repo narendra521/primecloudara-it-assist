@@ -1,5 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PrimeCloudara IT Assist</title>
+
+<style>
+:root{
+--bg:#0f172a;
+--panel:#111827;
+--card:#1f2937;
+--border:#374151;
+--text:#f9fafb;
+--muted:#9ca3af;
+--accent:#2563eb;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Inter,Segoe UI,sans-serif;
+}
+
+body{
+background:var(--bg);
+color:var(--text);
+height:100vh;
+display:flex;
+flex-direction:column;
+}
+
+.header{
+height:72px;
+background:var(--panel);
+border-bottom:1px solid var(--border);
+display:flex;
+align-items:center;
+padding:0 24px;
+}
+
+.logo{
+width:44px;
+height:44px;
+border-radius:12px;
+background:var(--accent);
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:700;
+margin-right:12px;
+}
+
+.brand h2{
+font-size:18px;
+}
+
+.brand p{
+font-size:12px;
+color:var(--muted);
+}
+
+.chat-container{
+flex:1;
+max-width:900px;
+width:100%;
+margin:auto;
+padding:40px 24px;
+overflow:auto;
+}
+
+.hero{
+text-align:center;
+margin-top:60px;
+}
+
+.hero h1{
+font-size:42px;
+margin-bottom:10px;
+}
+
+.hero p{
+color:var(--muted);
+}
+
+.prompts{
+display:flex;
+justify-content:center;
+flex-wrap:wrap;
+gap:12px;
+margin-top:30px;
+}
+
+.prompt{
+background:var(--card);
+border:1px solid var(--border);
+padding:12px 18px;
+border-radius:14px;
+cursor:pointer;
+}
+
+.prompt:hover{
+background:#293548;
+}
+
+.message{
+margin-bottom:20px;
+}
+
+.user{
+background:var(--accent);
+padding:16px;
+border-radius:18px;
+max-width:80%;
+margin-left:auto;
+}
+
+.assistant{
+background:var(--card);
+border:1px solid var(--border);
+padding:18px;
+border-radius:18px;
+white-space:pre-wrap;
+line-height:1.6;
+}
+
+.input-bar{
+background:var(--panel);
+border-top:1px solid var(--border);
+padding:18px;
+}
+
+.form{
+max-width:900px;
+margin:auto;
+display:flex;
+gap:12px;
+}
+
+textarea{
+flex:1;
+height:60px;
+background:var(--card);
+color:white;
+border:1px solid var(--border);
+border-radius:14px;
+padding:14px;
+resize:none;
+}
+
+button{
+width:120px;
+border:none;
+background:var(--accent);
+color:white;
+border-radius:14px;
+font-weight:600;
+cursor:pointer;
+}
+
+button:hover{
+opacity:0.9;
+}
+
+.footer{
+text-align:center;
+font-size:12px;
+color:var(--muted);
+margin-top:10px;
+}
+</style>
+
+<script>
+function askQuestion(text){
+document.getElementById("question").value=text;
+}
+
+document.addEventListener("DOMContentLoaded", function(){
+const textarea=document.getElementById("question");
+if(textarea){
+textarea.addEventListener("keydown", function(e){
+if(e.key==="Enter" && !e.shiftKey){
+e.preventDefault();
+this.form.submit();
+}
+});
+}
+});
+</script>
+
+</head>
+<body>
+
+<div class="header">
+<div class="logo">PC</div>
+<div class="brand">
+<h2>PrimeCloudara IT Assist</h2>
+<p>Enterprise Knowledge Assistant</p>
+</div>
+</div>
+
+<div class="chat-container">
+
+{% if not response %}
+
+<div class="hero">
+<h1>How can I help today?</h1>
+<p>Ask questions about SOPs, VPN access, password resets and IT procedures.</p>
+
+<div class="prompts">
+<div class="prompt" onclick="askQuestion('How do I request VPN access?')">VPN Access</div>
+<div class="prompt" onclick="askQuestion('How do I reset my password?')">Password Reset</div>
+<div class="prompt" onclick="askQuestion('How do I request software installation?')">Software Installation</div>
+<div class="prompt" onclick="askQuestion('What SOP documents do you have access to?')">Available SOPs</div>
+</div>
+</div>
+
 {% endif %}
+
 {% if response %}
+
+<div class="message">
+<div class="user">
 {{ question }}
+</div>
+</div>
+
+<div class="message">
+<div class="assistant">
 {{ response }}
+</div>
+</div>
+
 {% endif %}
+
+</div>
+
+<div class="input-bar">
+
+<form method="POST" class="form">
+
+<textarea
+id="question"
+name="question"
+placeholder="Message PrimeCloudara IT Assist"
+required></textarea>
+
+<button type="submit">
+Send
+</button>
+
+</form>
+
+<div class="footer">
+Powered by Azure OpenAI GPT-5 • PrimeCloudara
+</div>
+
+</div>
+
+</body>
+</html>
